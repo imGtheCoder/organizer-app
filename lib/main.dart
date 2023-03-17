@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:organizer_app/providers/goals.dart';
 import 'package:organizer_app/providers/routines.dart';
 import 'package:organizer_app/screens/wallpaper_screen.dart';
 import 'package:provider/provider.dart';
@@ -30,7 +31,8 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (context) => Tasks()),
-          ChangeNotifierProvider(create: (context) => Routines())
+          ChangeNotifierProvider(create: (context) => Routines()),
+          ChangeNotifierProvider(create: (context) => Goals()),
         ],
         child: MaterialApp(
           title: 'Flutter Demo',

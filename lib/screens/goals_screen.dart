@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:organizer_app/screens/add_goal_screen.dart';
-import '../providers/goals.dart' as GOALS;
+import '../providers/goals.dart';
 
 class GoalsScreen extends StatefulWidget {
   const GoalsScreen({super.key});
@@ -13,7 +14,8 @@ class GoalsScreen extends StatefulWidget {
 class _GoalsScreenState extends State<GoalsScreen> {
   @override
   Widget build(BuildContext context) {
-    final items = GOALS.goals;
+    final goals = Provider.of<Goals>(context).goals;
+
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -29,11 +31,11 @@ class _GoalsScreenState extends State<GoalsScreen> {
       body: Container(
         padding: const EdgeInsets.all(10),
         child: ListView.builder(
-          itemCount: items.length,
+          itemCount: goals.length,
           itemBuilder: (ctx, i) {
             //items[i].expanded = false;
             return Container(
-              margin: const EdgeInsets.only(top: 15),
+              margin: const EdgeInsets.only(top: 10),
               decoration: const BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(10)),
                 boxShadow: [
@@ -48,7 +50,7 @@ class _GoalsScreenState extends State<GoalsScreen> {
                 borderRadius: BorderRadius.circular(10),
                 onTap: () {
                   setState(() {
-                    items[i].expanded = !items[i].expanded;
+                    goals[i].expanded = !goals[i].expanded;
                   });
                 },
                 child: Padding(
@@ -60,13 +62,13 @@ class _GoalsScreenState extends State<GoalsScreen> {
                         children: [
                           Icon(Icons.bolt),
                           Text(
-                            items[i].title,
+                            goals[i].title,
                             style: Theme.of(context).textTheme.bodyLarge,
                           ),
                           Expanded(
                             child: Align(
                               alignment: Alignment.centerRight,
-                              child: Icon(!items[i].expanded
+                              child: Icon(!goals[i].expanded
                                   ? Icons.expand_more
                                   : Icons.expand_less, color: Color(0xFF5C5470),),
                             ),
@@ -74,16 +76,16 @@ class _GoalsScreenState extends State<GoalsScreen> {
                           SizedBox(width: 10,)
                         ],
                       ),
-                      if (items[i].expanded)
+                      if (goals[i].expanded)
                         Container(
                           padding:
                               EdgeInsets.only(right: 20, left: 20, top: 15),
                           child: Text(
-                            items[i].description,
+                            goals[i].description,
                             style: TextStyle(color: Colors.grey),
                           ),
                         ),
-                      if (items[i].expanded)
+                      if (goals[i].expanded)
                         Padding(
                           padding: const EdgeInsets.only(
                               top: 15, right: 15, left: 15),

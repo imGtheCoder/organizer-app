@@ -2,27 +2,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:organizer_app/providers/routine.dart';
-import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 
 import '../providers/day_in_routine.dart';
 import '../providers/task.dart';
 
 class Routines with ChangeNotifier {
-  // List<Task> _tasks = [
-  //   Task(duration: Duration(hours: 1), title: 'Do homework', id: '0'),
-  //   Task(
-  //       id: '1',
-  //       title: 'Clean my room',
-  //       duration: Duration(hours: 2, minutes: 30)),
-  //   Task(id: '2', title: 'Learn at math', duration: Duration(minutes: 20)),
-  //   Task(id: '3', title: 'Go shopping', duration: Duration(hours: 3)),
-  //   Task(id: '4', title: 'Bake a cake', duration: Duration(minutes: 30)),
-  // ];
-
-  // List<Task> tasks(String day, int i) {
-  //   return [..._routines[i]];
-  // }
   int itemsLeft(List<Task> tasks) {
     int itmLft = tasks.length;
     for (int i = 0; i < tasks.length; i++) {
