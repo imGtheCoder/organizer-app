@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:organizer_app/providers/goals.dart';
 import 'package:organizer_app/providers/routines.dart';
 import 'package:organizer_app/screens/wallpaper_screen.dart';
 import 'package:provider/provider.dart';
@@ -30,7 +31,8 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (context) => Tasks()),
-          ChangeNotifierProvider(create: (context) => Routines())
+          ChangeNotifierProvider(create: (context) => Routines()),
+          ChangeNotifierProvider(create: (context) => Goals())
         ],
         child: MaterialApp(
           title: 'Flutter Demo',
@@ -82,6 +84,11 @@ class MyApp extends StatelessWidget {
                     fontSize: 22.0,
                     fontFamily: 'Rubik',
                     fontWeight: FontWeight.w600,
+                    color: Color(0xFF5C5470)),
+                titleSmall: TextStyle(
+                    fontSize: 19.0,
+                    fontWeight: FontWeight.w500,
+                    fontFamily: 'Rubik',
                     color: Color(0xFF5C5470)),
                 bodyMedium: TextStyle(fontSize: 16.0, color: Color(0xFF5C5470)),
                 bodyLarge: TextStyle(
