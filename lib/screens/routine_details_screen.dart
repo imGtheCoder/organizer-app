@@ -67,10 +67,7 @@ class _RoutineDetailScreenState extends State<RoutineDetailScreen> {
     var toggleActive = Provider.of<Routines>(context, listen: false).toggleActive ;
     //print(expectedDay(chosenDay));
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        
-        onPressed: () {},
-      ),
+      
       appBar: AppBar(
         actions: [
           Switch(value: Provider.of<Routines>(context, listen: false).routines.firstWhere((element) => element.id == widget.routineId).active, onChanged: (value){

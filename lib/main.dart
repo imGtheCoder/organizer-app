@@ -104,9 +104,6 @@ class MyApp extends StatelessWidget {
             '/': (context) => const HomeScreen(),
             HelpScreen.pageRoute: (context) => const HelpScreen(),
             GoalsScreen.pageRoute: (context) => const GoalsScreen(),
-            AddGoalScreen.pageRoute: (context) => const AddGoalScreen(
-                  title: 'Add a goal',
-                ),
             RoutinesScreen.pageRoute: (context) => const RoutinesScreen(),
             WallpaperScreen.pageRoute: (context) => const WallpaperScreen(),
           },

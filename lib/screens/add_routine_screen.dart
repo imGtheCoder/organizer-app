@@ -404,7 +404,8 @@ class _AddRoutineScreenState extends State<AddRoutineScreen> {
                               borderSide: BorderSide(
                                   color: Color.fromRGBO(92, 84, 112, 1)))),
                     ),
-                  )),
+                  ),
+                  ),
                 ],
               ),
             ),

@@ -11,27 +11,95 @@ class Goals with ChangeNotifier {
     currentGoal.currentlyWorkingOnIt = !currentGoal.currentlyWorkingOnIt;
   }
 
-  void addToTotalTimeSpent(String goalId, Duration duration) {
-    final index = _goals.indexWhere((element) => element.id == goalId);
-    print('${duration.inSeconds} from goals');
-    _goals[index] = Goal(
-        addedAt: _goals[index].addedAt,
-        totalTimeSpent: _goals[index].totalTimeSpent + duration,
-        startedAt: _goals[index].startedAt,
-        id: _goals[index].id,
-        title: _goals[index].title,
-        description: _goals[index].description,
-        finishDate: _goals[index].finishDate,
-        expanded: _goals[index].expanded);
-    print('${_goals[index].totalTimeSpent.inSeconds} from goals time spent');
-    ;
+  DateTime todayAt00(){
+    return  DateTime.utc(
+        DateTime.now().year, DateTime.now().month, DateTime.now().day);
   }
+
+  void addToTodayTimeSpent(String goalId) {
+    final index = _goals.indexWhere((element) => element.id == goalId);
+    final todayAt0 = todayAt00();
+    // final todayAt00 = DateTime.utc(
+    //     DateTime.now().year, DateTime.now().month, DateTime.now().day);
+    //print('${duration.inSeconds} from goals');
+    if (_goals[index].stoppedAt.isBefore(todayAt0)) {
+      _goals[index] = Goal(
+          stoppedAt: DateTime.now(),
+          addedAt: _goals[index].addedAt,
+          totalTimeSpent:
+              _goals[index].totalTimeSpent + _goals[index].todayTimeSpent,
+          todayTimeSpent: Duration.zero + DateTime.now().difference(_goals[index].startedAt),
+          startedAt: _goals[index].startedAt,
+          id: _goals[index].id,
+          title: _goals[index].title,
+          description: _goals[index].description,
+          finishDate: _goals[index].finishDate,
+          expanded: _goals[index].expanded);
+      notifyListeners();
+    } else {
+      _goals[index] = Goal(
+          stoppedAt: _goals[index].stoppedAt,
+          addedAt: _goals[index].addedAt,
+          totalTimeSpent: _goals[index].totalTimeSpent,
+          todayTimeSpent: _goals[index].todayTimeSpent + DateTime.now().difference(_goals[index].startedAt),
+          startedAt: _goals[index].startedAt,
+          id: _goals[index].id,
+          title: _goals[index].title,
+          description: _goals[index].description,
+          finishDate: _goals[index].finishDate,
+          expanded: _goals[index].expanded);
+    }
+
+    //print('${_goals[index].totalTimeSpent.inSeconds} from goals time spent');
+  }
+
+  Duration getTodayTimeSpent(String goalId, DateTime currentDate) {
+    final currentGoal = _goals.firstWhere((element) => element.id == goalId);
+    final totalTimeSpent = currentGoal.totalTimeSpent;
+    //DateTime.now().year
+    //if(toda)
+    final todayAt0 = DateTime.utc(
+        DateTime.now().year, DateTime.now().month, DateTime.now().day);
+    final durationToday =
+        totalTimeSpent - todayAt0.difference(currentGoal.startedAt);
+    return durationToday;
+  }
+
+  void addNewGoal(
+      String title, String description, DateTime targetDate, DateTime addedAt) {
+    _goals.add(Goal(
+        stoppedAt: DateTime(2000),
+        addedAt: addedAt,
+        totalTimeSpent: Duration.zero,
+        todayTimeSpent: Duration.zero,
+        startedAt: DateTime(2000),
+        id: DateTime.now().toString(),
+        title: title,
+        description: description,
+        finishDate: targetDate,
+        expanded: false));
+    notifyListeners();
+  }
+
+  Goal emptyGoal = Goal(
+      stoppedAt: DateTime(2000),
+      addedAt: DateTime(2000),
+      totalTimeSpent: Duration.zero,
+      todayTimeSpent: Duration.zero,
+      startedAt: DateTime(2000),
+      id: '',
+      title: '',
+      description: '',
+      finishDate: DateTime(2000),
+      expanded: false);
 
   final List<Goal> _goals = [
     Goal(
         addedAt: DateTime.now(),
         totalTimeSpent: Duration.zero,
+        todayTimeSpent: Duration.zero,
         startedAt: DateTime.now(),
+        stoppedAt: DateTime.now(),
         description: 'very cool thing ',
         title: 'Learn Flutter programming',
         id: '1',
@@ -40,7 +108,9 @@ class Goals with ChangeNotifier {
     Goal(
         addedAt: DateTime.now(),
         totalTimeSpent: Duration.zero,
+        todayTimeSpent: Duration.zero,
         startedAt: DateTime.now(),
+        stoppedAt: DateTime.now(),
         description: 'very cool thing ',
         title: 'Learn app development',
         id: '2',
@@ -49,7 +119,9 @@ class Goals with ChangeNotifier {
     Goal(
         addedAt: DateTime.now(),
         totalTimeSpent: Duration.zero,
+        todayTimeSpent: Duration.zero,
         startedAt: DateTime.now(),
+        stoppedAt: DateTime.now(),
         description: 'very cool thing ',
         title: 'Learn to do a backflip',
         id: '3',
@@ -58,7 +130,9 @@ class Goals with ChangeNotifier {
     Goal(
         addedAt: DateTime.now(),
         totalTimeSpent: Duration.zero,
+        todayTimeSpent: Duration.zero,
         startedAt: DateTime.now(),
+        stoppedAt: DateTime.now(),
         description: 'very cool thing ' * 10,
         title: 'Learn some trick on skate',
         id: '4',
@@ -67,7 +141,9 @@ class Goals with ChangeNotifier {
     Goal(
         addedAt: DateTime.now(),
         totalTimeSpent: Duration.zero,
+        todayTimeSpent: Duration.zero,
         startedAt: DateTime.now(),
+        stoppedAt: DateTime.now(),
         description: 'very cool thing ' * 10,
         title: 'Learn to wash tha dishez',
         id: '5',
