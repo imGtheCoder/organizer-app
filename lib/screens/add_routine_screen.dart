@@ -288,7 +288,7 @@ class _AddRoutineScreenState extends State<AddRoutineScreen> {
       String Function(Duration duration) printDuration) {
     return Container(
       height: 35,
-      margin: const EdgeInsets.only(top: 10),
+      margin: const EdgeInsets.only(top: 10, right: 3, left: 3),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         boxShadow: const [
@@ -300,47 +300,79 @@ class _AddRoutineScreenState extends State<AddRoutineScreen> {
               blurStyle: BlurStyle.outer)
         ],
       ),
-      child: InkWell(
-        borderRadius: BorderRadius.circular(10),
-        onLongPress: () {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: const Text('Do you want to delete this item?'),
-            action: SnackBarAction(
-                label: 'YES',
-                onPressed: () {
-                  deleteSingleTask(
-                    widget.routineWaitingAdding.id,
-                    widget.routineWaitingAdding.days
-                        .firstWhere((element) =>
-                            element.weekDay == expectedDay(chosenDay))
-                        .weekDay,
-                    widget.routineWaitingAdding.days
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            SizedBox(
+              width: MediaQuery.of(context).size.width - 200,
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: [
+                    Text(widget.routineWaitingAdding.days
                         .firstWhere((element) =>
                             element.weekDay == expectedDay(chosenDay))
                         .tasks[i]
-                        .id,
-                  );
-                  setState(() {});
-                }),
-          ));
-        },
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(widget.routineWaitingAdding.days
-                  .firstWhere(
-                      (element) => element.weekDay == expectedDay(chosenDay))
-                  .tasks[i]
-                  .title),
-              Text(printDuration(widget.routineWaitingAdding.days
-                  .firstWhere(
-                      (element) => element.weekDay == expectedDay(chosenDay))
-                  .tasks[i]
-                  .duration)),
-            ],
-          ),
+                        .title),
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(
+              child: Row(
+                children: [
+                  Text(
+                    printDuration(widget.routineWaitingAdding.days
+                        .firstWhere((element) =>
+                            element.weekDay == expectedDay(chosenDay))
+                        .tasks[i]
+                        .duration),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 4),
+                    child: VerticalDivider(
+                      thickness: 1,
+                    ),
+                  ),
+                  IconButton(
+                      padding: EdgeInsets.zero,
+                      constraints: BoxConstraints(),
+                      onPressed: () {
+                        //delete task
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content:
+                              const Text('Do you want to delete this item?'),
+                          action: SnackBarAction(
+                              label: 'YES',
+                              onPressed: () {
+                                deleteSingleTask(
+                                  widget.routineWaitingAdding.id,
+                                  widget.routineWaitingAdding.days
+                                      .firstWhere((element) =>
+                                          element.weekDay ==
+                                          expectedDay(chosenDay))
+                                      .weekDay,
+                                  widget.routineWaitingAdding.days
+                                      .firstWhere((element) =>
+                                          element.weekDay ==
+                                          expectedDay(chosenDay))
+                                      .tasks[i]
+                                      .id,
+                                );
+                                setState(() {});
+                              }),
+                        ));
+                      },
+                      icon: Icon(
+                        Icons.delete,
+                        color: Color.fromRGBO(135, 0, 0, 0.7),
+                      )),
+                ],
+              ),
+            )
+          ],
         ),
       ),
     );
@@ -348,25 +380,22 @@ class _AddRoutineScreenState extends State<AddRoutineScreen> {
 
   SizedBox customTextField(String hint, TextEditingController controller) {
     return SizedBox(
-      child: Expanded(
-        child: TextField(
-          controller: controller,
-          cursorColor: const Color(0xFF5C5470),
-          style: const TextStyle(fontSize: 16),
-          decoration: InputDecoration(
-              icon: const Icon(
-                Icons.edit_square,
-                color: Color(0xFF5C5470),
-              ),
-              hintText: hint,
-              hintStyle: const TextStyle(
-                  color: Color.fromRGBO(92, 84, 112, 0.5), fontSize: 16),
-              enabledBorder: const UnderlineInputBorder(
-                  borderSide: BorderSide(color: Color.fromRGBO(0, 0, 0, 0))),
-              focusedBorder: const UnderlineInputBorder(
-                  borderSide:
-                      BorderSide(color: Color.fromRGBO(92, 84, 112, 1)))),
-        ),
+      child: TextField(
+        controller: controller,
+        cursorColor: const Color(0xFF5C5470),
+        style: const TextStyle(fontSize: 16),
+        decoration: InputDecoration(
+            icon: const Icon(
+              Icons.edit_square,
+              color: Color(0xFF5C5470),
+            ),
+            hintText: hint,
+            hintStyle: const TextStyle(
+                color: Color.fromRGBO(92, 84, 112, 0.5), fontSize: 16),
+            enabledBorder: const UnderlineInputBorder(
+                borderSide: BorderSide(color: Color.fromRGBO(0, 0, 0, 0))),
+            focusedBorder: const UnderlineInputBorder(
+                borderSide: BorderSide(color: Color.fromRGBO(92, 84, 112, 1)))),
       ),
     );
   }

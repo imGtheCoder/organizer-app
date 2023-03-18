@@ -133,6 +133,8 @@ class Routines with ChangeNotifier {
     }
     return eligible;
   }
+
+
   //RETURNS ACTIVE TASKS
   List<Task> getTodaysTasks(DateTime currentDate) {
     List<Routine> activeRoutines = [];
@@ -169,6 +171,12 @@ class Routines with ChangeNotifier {
   void editRoutine(String id, String title,String description, List<DayInRoutine> days, bool active){
     final index = _routines.indexWhere((element) => element.id ==id); 
     _routines[index]=Routine(id: _routines[index].id, title: title, days: days, description: description, active: active);
+    notifyListeners();
+  }
+
+  void deleteRoutine(String id){
+    final index = _routines.indexWhere((element) => element.id == id);
+    _routines.removeAt(index);
     notifyListeners();
   }
 

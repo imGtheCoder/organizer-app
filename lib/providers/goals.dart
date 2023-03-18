@@ -100,6 +100,12 @@ class Goals with ChangeNotifier {
     notifyListeners();
   }
 
+  void deleteGoal(String id){
+    final index = _goals.indexWhere((element) => element.id == id);
+    _goals.removeAt(index);
+    notifyListeners();
+  }
+
   Goal emptyGoal = Goal(
       stoppedAt: DateTime(2000),
       addedAt: DateTime(2000),

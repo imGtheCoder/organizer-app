@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:organizer_app/screens/routine_details_screen.dart';
 import 'package:provider/provider.dart';
@@ -36,6 +37,31 @@ class RoutinesScreen extends StatelessWidget {
                   builder: (context) =>
                       RoutineDetailScreen(routineId: routineId)));
         },
+        onLongPress: () {
+          showDialog(
+              context: context,
+              builder: (context) => AlertDialog(
+                    title: const Text('Warning!'),
+                    content: Text(
+                      'Are you sure you want to permanently delete this routine?',
+                      style: Theme.of(context).textTheme.bodyLarge,
+                    ),
+                    actions: [
+                      TextButton(
+                          onPressed: () {
+                            Provider.of<Routines>(context, listen: false)
+                                .deleteRoutine(routineId);
+                            Navigator.pop(context);
+                          },
+                          child: const Text('Yes')),
+                      TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: const Text('No'))
+                    ],
+                  ));
+        },
         child: Padding(
           padding: const EdgeInsets.all(15.0),
           child: Column(
@@ -67,7 +93,6 @@ class RoutinesScreen extends StatelessWidget {
                   SizedBox(
                     width: (MediaQuery.of(context).size.width - 150) / 2,
                     child: Text(
-                      
                       title,
                       style: Theme.of(context).textTheme.titleMedium,
                       overflow: TextOverflow.ellipsis,
@@ -96,39 +121,45 @@ class RoutinesScreen extends StatelessWidget {
     final printDuration = Provider.of<Routines>(context).printDuration;
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Routines'),
-        //backgroundColor: Colors.white,
-        actions: [
-          IconButton(
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => AddRoutineScreen(
-                            routineWaitingAdding:
-                                Provider.of<Routines>(context, listen: false)
-                                    .emptyRoutine)));
-                //open add routine screen
-              },
-              icon: const Icon(Icons.add))
-        ],
-      ),
-      body: GridView.builder(
-          itemCount: routines.length,
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2),
-          itemBuilder: (context, i) {
-            final averageDuration = Provider.of<Routines>(context)
-                .averageDurationOverTheWeek(routines[i].days);
-            return _gridItem(
-                context,
-                routines[i].title,
-                routines[i].description,
-                i,
-                routines[i].id,
-                printDuration(averageDuration));
-          }),
-    );
+        appBar: AppBar(
+          title: const Text('Routines'),
+          //backgroundColor: Colors.white,
+          actions: [
+            IconButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => AddRoutineScreen(
+                              routineWaitingAdding:
+                                  Provider.of<Routines>(context, listen: false)
+                                      .emptyRoutine)));
+                  //open add routine screen
+                },
+                icon: const Icon(Icons.add))
+          ],
+        ),
+        body: routines.isNotEmpty
+            ? GridView.builder(
+                itemCount: routines.length,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: defaultTargetPlatform == TargetPlatform.macOS ? 4 :2),
+                itemBuilder: (context, i) {
+                  final averageDuration = Provider.of<Routines>(context)
+                      .averageDurationOverTheWeek(routines[i].days);
+                  return _gridItem(
+                      context,
+                      routines[i].title,
+                      routines[i].description,
+                      i,
+                      routines[i].id,
+                      printDuration(averageDuration));
+                })
+            : const Padding(
+              padding: EdgeInsets.all(30.0),
+              child: Center(
+                  child: Text(
+                      'You have not added any routines yet. If you want to see something here, you should try to add one!', textAlign: TextAlign.center,)),
+            ));
   }
 }
