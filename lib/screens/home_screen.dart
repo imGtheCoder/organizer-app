@@ -14,21 +14,24 @@ import 'package:organizer_app/widgets/square_item.dart';
 
 //providers
 
-
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
-  Widget build(BuildContext context){
+  State<HomeScreen> createState() => _HomeScreenState();
+}
 
-   
-    // final remainingItems = Provider.of<Routines>(context).remainingItems();
-     return Scaffold(
+class _HomeScreenState extends State<HomeScreen> {
+  var selectedIndex = 0;
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
       drawer: const HomeDrawer(),
       appBar: AppBar(
         title: const Text('Welcome back, USER'),
         //backgroundColor: Colors.white,
       ),
+      bottomNavigationBar: Container(height: 30,color: Colors.amber,),
       body: SingleChildScrollView(
         child: Column(children: [
           //const HomeProgressBar(),

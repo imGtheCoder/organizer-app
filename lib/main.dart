@@ -48,7 +48,7 @@ class MyApp extends StatelessWidget {
                     fontSize: 25.0,
                     fontFamily: 'TiltNeon',
                     color: Color(0xFF5C5470)),
-                backgroundColor: Color(0xFFEAE0DA),
+                backgroundColor:Color(0xFFEAE0DA),
                 foregroundColor: Color(0xFF5C5470),
                 shadowColor: Color(0x00FFFFFF),
                 elevation: 0,
