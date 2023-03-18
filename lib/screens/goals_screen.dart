@@ -32,14 +32,14 @@ class _GoalsScreenState extends State<GoalsScreen> {
                             editing: false)));
                 //Navigator.of(context).pushNamed(AddGoalScreen.pageRoute);
               },
-              icon: Icon(Icons.add))
+              icon: const Icon(Icons.add))
         ],
         //backgroundColor: Colors.white,
         title: const Text('Goals'),
       ),
       body: Container(
         padding: const EdgeInsets.all(10),
-        child: ListView.builder(
+        child: goals.isNotEmpty ? ListView.builder(
           itemCount: goals.length,
           itemBuilder: (ctx, i) {
             //goals[i].expanded = false;
@@ -69,16 +69,16 @@ class _GoalsScreenState extends State<GoalsScreen> {
                     children: [
                       Row(
                         children: [
-                          SizedBox(
+                          const SizedBox(
                             width: 5,
                           ),
                           if (goals[i].currentlyWorkingOnIt)
-                            Icon(
+                            const Icon(
                               Icons.circle,
                               size: 15,
                               color: Color.fromRGBO(0, 255, 0, 0.2),
                             ),
-                          SizedBox(
+                          const SizedBox(
                             width: 5,
                           ),
                           Text(
@@ -92,11 +92,11 @@ class _GoalsScreenState extends State<GoalsScreen> {
                                 !goals[i].expanded
                                     ? Icons.expand_more
                                     : Icons.expand_less,
-                                color: Color(0xFF5C5470),
+                                color: const Color(0xFF5C5470),
                               ),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 10,
                           )
                         ],
@@ -112,12 +112,22 @@ class _GoalsScreenState extends State<GoalsScreen> {
                                 goals[i].description,
                                 style: Theme.of(context).textTheme.bodyMedium,
                               ),
-                              SizedBox(
+                              const SizedBox(height: 10,),
+                              IconButton(onPressed: (){
+                                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => AddGoalScreen(
+                            goalWaitingAdding:
+                                goals[i],
+                            editing: true)));
+                              }, icon: const Icon(Icons.edit, size: 10,),),
+                              const SizedBox(
                                 height: 20,
                               ),
                               Row(
                                 children: [
-                                  Text(
+                                  const Text(
                                     'Started on: ',
                                     style:
                                         TextStyle(fontWeight: FontWeight.w500),
@@ -126,31 +136,31 @@ class _GoalsScreenState extends State<GoalsScreen> {
                                       .format(goals[i].addedAt))
                                 ],
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
                               Text(
                                 'Total time spent: ${Provider.of<Routines>(context, listen: false).printDuration(goals[i].totalTimeSpent)}',
-                                style: TextStyle(fontWeight: FontWeight.w500),
+                                style: const TextStyle(fontWeight: FontWeight.w500),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
                               Row(
                                 children: [
-                                  Text(
+                                  const Text(
                                     'Target completion date: ',
                                     style:
                                         TextStyle(fontWeight: FontWeight.w500),
                                   ),
-                                  Text(DateFormat('d/M/y')
-                                      .format(goals[i].finishDate)),
+                                  Text(DateFormat('d/M/y').format(goals[i].finishDate)),
                                 ],
                               ),
                               
-                              SizedBox(
+                              const SizedBox(
                                 height: 40,
                               ),
+                              
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
@@ -190,7 +200,8 @@ class _GoalsScreenState extends State<GoalsScreen> {
               ),
             );
           },
-        ),
+        ): 
+        const Center(child: Text('You have not added any goal yet. To see something here, you may add a goal.', textAlign: TextAlign.center,))
       ),
     );
   }

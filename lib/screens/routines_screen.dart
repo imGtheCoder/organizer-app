@@ -44,7 +44,7 @@ class RoutinesScreen extends StatelessWidget {
               Row(
                 children: [
                   if (Provider.of<Routines>(context).routines[i].active)
-                    Icon(
+                    const Icon(
                       Icons.circle,
                       color: Color.fromRGBO(
                         0,
@@ -61,7 +61,7 @@ class RoutinesScreen extends StatelessWidget {
                         )
                       ],
                     ),
-                  SizedBox(
+                  const SizedBox(
                     width: 5,
                   ),
                   SizedBox(
@@ -81,7 +81,7 @@ class RoutinesScreen extends StatelessWidget {
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
               ),
-              Expanded(child: SizedBox()),
+              const Expanded(child: SizedBox()),
               Text('Avg. duration/day: \n$avgDuration')
             ],
           ),

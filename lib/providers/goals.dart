@@ -11,8 +11,8 @@ class Goals with ChangeNotifier {
     currentGoal.currentlyWorkingOnIt = !currentGoal.currentlyWorkingOnIt;
   }
 
-  DateTime todayAt00(){
-    return  DateTime.utc(
+  DateTime todayAt00() {
+    return DateTime.utc(
         DateTime.now().year, DateTime.now().month, DateTime.now().day);
   }
 
@@ -28,7 +28,8 @@ class Goals with ChangeNotifier {
           addedAt: _goals[index].addedAt,
           totalTimeSpent:
               _goals[index].totalTimeSpent + _goals[index].todayTimeSpent,
-          todayTimeSpent: Duration.zero + DateTime.now().difference(_goals[index].startedAt),
+          todayTimeSpent: Duration.zero +
+              DateTime.now().difference(_goals[index].startedAt),
           startedAt: _goals[index].startedAt,
           id: _goals[index].id,
           title: _goals[index].title,
@@ -41,7 +42,8 @@ class Goals with ChangeNotifier {
           stoppedAt: _goals[index].stoppedAt,
           addedAt: _goals[index].addedAt,
           totalTimeSpent: _goals[index].totalTimeSpent,
-          todayTimeSpent: _goals[index].todayTimeSpent + DateTime.now().difference(_goals[index].startedAt),
+          todayTimeSpent: _goals[index].todayTimeSpent +
+              DateTime.now().difference(_goals[index].startedAt),
           startedAt: _goals[index].startedAt,
           id: _goals[index].id,
           title: _goals[index].title,
@@ -81,6 +83,23 @@ class Goals with ChangeNotifier {
     notifyListeners();
   }
 
+  void editGoal(String goalId, String title, String description,
+      ) {
+    final index = _goals.indexWhere((element) => element.id == goalId);
+    _goals[index] =Goal(
+        stoppedAt: _goals[index].stoppedAt,
+        addedAt: _goals[index].addedAt,
+        totalTimeSpent: _goals[index].todayTimeSpent,
+        todayTimeSpent: _goals[index].todayTimeSpent,
+        startedAt: _goals[index].startedAt,
+        id: _goals[index].id,
+        title: title,
+        description: description,
+        finishDate: _goals[index].finishDate,
+        expanded: _goals[index].expanded);
+    notifyListeners();
+  }
+
   Goal emptyGoal = Goal(
       stoppedAt: DateTime(2000),
       addedAt: DateTime(2000),
@@ -92,6 +111,8 @@ class Goals with ChangeNotifier {
       description: '',
       finishDate: DateTime(2000),
       expanded: false);
+
+  final List<Goal> noGoals = [];
 
   final List<Goal> _goals = [
     Goal(

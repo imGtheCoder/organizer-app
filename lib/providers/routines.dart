@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:organizer_app/providers/routine.dart';
-import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 
 import '../providers/day_in_routine.dart';

@@ -16,12 +16,12 @@ String printDuration(Duration duration) {
 
 
 class Tasks with ChangeNotifier{
-  List<Task> _tasks = [
-  Task(duration: Duration(hours: 1), title:'Do homework' , id:'0'),
-  Task(id: '1',title:'Clean my room', duration: Duration(hours: 2, minutes: 30)),
-  Task(id: '2',title:'Learn at math', duration: Duration(minutes: 20)),
-  Task(id: '3',title:'Go shopping', duration: Duration(hours: 3)),
-  Task(id: '4',title:'Bake a cake', duration: Duration(minutes: 30)),
+  final List<Task> _tasks = [
+  Task(duration: const Duration(hours: 1), title:'Do homework' , id:'0'),
+  Task(id: '1',title:'Clean my room', duration: const Duration(hours: 2, minutes: 30)),
+  Task(id: '2',title:'Learn at math', duration: const Duration(minutes: 20)),
+  Task(id: '3',title:'Go shopping', duration: const Duration(hours: 3)),
+  Task(id: '4',title:'Bake a cake', duration: const Duration(minutes: 30)),
   ];
 
   List<Task> get tasks{
