@@ -9,7 +9,7 @@ class HomeDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Drawer(
       child: Padding(
-        padding: const EdgeInsets.only(top: 40, right: 15, left: 15),
+        padding: const EdgeInsets.only(top: 80, right: 15, left: 15),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

@@ -118,7 +118,7 @@ class _RoutineDetailScreenState extends State<RoutineDetailScreen> {
               ),
               Text(
                 tasks.isNotEmpty ? 'Tasks: ': 'No tasks for this day!',
-                style: TextStyle(fontWeight: FontWeight.w400, fontSize: 20),
+                style: const TextStyle(fontWeight: FontWeight.w400, fontSize: 20),
               ),
               SizedBox(
                 height: tasks.length * 56,

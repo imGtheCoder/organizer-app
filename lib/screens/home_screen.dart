@@ -1,17 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:organizer_app/providers/routines.dart';
-import 'package:organizer_app/screens/wallpaper_screen.dart';
+import 'package:organizer_app/screens/main_screen.dart';
+import 'package:organizer_app/screens/statistics_screen.dart';
+
 import 'package:organizer_app/widgets/home_drawer.dart';
-import 'package:provider/provider.dart';
-import 'package:organizer_app/screens/goals_screen.dart';
-import 'package:organizer_app/screens/help_screen.dart';
-import 'package:organizer_app/screens/routines_screen.dart';
-
-//widgets
-import 'package:organizer_app/widgets/home_progress_bar.dart';
-import 'package:organizer_app/widgets/todays_progress_item.dart';
-import 'package:organizer_app/widgets/square_item.dart';
-
 //providers
 
 class HomeScreen extends StatefulWidget {
@@ -21,7 +12,10 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
+enum SelectedItem { home, stats }
+
 class _HomeScreenState extends State<HomeScreen> {
+  var selectedItem = SelectedItem.home;
   var selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
@@ -31,48 +25,86 @@ class _HomeScreenState extends State<HomeScreen> {
         title: const Text('Welcome back, USER'),
         //backgroundColor: Colors.white,
       ),
-      bottomNavigationBar: Container(height: 30,color: Colors.amber,),
-      body: SingleChildScrollView(
-        child: Column(children: [
-          //const HomeProgressBar(),
-          TodaysProgressItem(
-            currentDate: DateTime.now(),
-          ),
+      bottomNavigationBar: bottomNavBar(),
+      body:
+          selectedItem == SelectedItem.home ? MainScreen() : StatisticsScreen(),
+    );
+  }
+
+  SizedBox bottomNavBar() {
+    return SizedBox(
+      height: 90,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          // Divider(
+          //   height: 0,
+          //   indent: 50,
+          //   endIndent: 50,
+          //   thickness: 1,
+          //   //color: Color(0xFF5C5470),
+          // ),
           Row(
-            children: const [
-              Expanded(
-                  child: SquareItem(
-                icon: Icons.favorite_outline,
-                title: 'HELP',
-                destination: HelpScreen.pageRoute,
-              )),
-              Expanded(
-                  child: SquareItem(
-                icon: Icons.calendar_month,
-                title: 'ROUTINES',
-                isLast: true,
-                destination: RoutinesScreen.pageRoute,
-              )),
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Column(
+                children: [
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  IconButton(
+                    padding: EdgeInsets.zero,
+                    onPressed: () {
+                      setState(() {
+                        selectedItem = SelectedItem.home;
+                      });
+                    },
+                    icon: Icon(
+                      Icons.home,
+                      size: selectedItem == SelectedItem.home ? 40 : 30,
+                      color: Color(0xFF5C5470),
+                    ),
+                  ),
+                  if (selectedItem == SelectedItem.home)
+                    Container(
+                      height: 2,
+                      width: 40,
+                      color: const Color(0xFF5C5470),
+                    )
+                ],
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  IconButton(
+                    padding: EdgeInsets.zero,
+                    onPressed: () {
+                      setState(() {
+                        selectedItem = SelectedItem.stats;
+                      });
+                    },
+                    icon: Icon(
+                      Icons.bar_chart,
+                      size: selectedItem == SelectedItem.stats ? 40 : 30,
+                      color: Color(0xFF5C5470),
+                    ),
+                  ),
+                  if (selectedItem == SelectedItem.stats)
+                    Container(
+                      height: 2,
+                      width: 40,
+                      decoration: BoxDecoration(
+                          color: const Color(0xFF5C5470),
+                          borderRadius: BorderRadius.circular(5)),
+                    )
+                ],
+              )
             ],
           ),
-          Row(
-            children: const [
-              Expanded(
-                  child: SquareItem(
-                icon: Icons.star_outline,
-                title: 'GOALS',
-                destination: GoalsScreen.pageRoute,
-              )),
-              Expanded(
-                  child: SquareItem(
-                icon: Icons.landscape_outlined,
-                title: 'WALLPAPER',
-                isLast: true,
-                destination: WallpaperScreen.pageRoute,
-              )),
-            ],
-          )
-        ]),
+        ],
       ),
     );
   }
