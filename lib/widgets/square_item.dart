@@ -26,8 +26,9 @@ class SquareItem extends StatelessWidget {
             right: isLast ? 15 : 7.5),
         //height: 170, //TODO: USE MEDIAQUERY??
 
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(20)),
+          color: Color(0xFF141721),
           boxShadow: [
             BoxShadow(
                 color: Color.fromRGBO(0, 0, 0, 0.18),
@@ -46,9 +47,18 @@ class SquareItem extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(icon, size: 80,color: Color(0xFF5C5470),),
-                SizedBox(height: 10,),
-                Text(title, style: Theme.of(context).textTheme.titleLarge,),
+                Icon(
+                  icon,
+                  size: 80,
+                  color: Color(0xFF4D724E),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  title,
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
               ],
             ),
           ),

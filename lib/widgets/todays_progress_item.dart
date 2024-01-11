@@ -15,7 +15,7 @@ class TodaysProgressItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Provider.of<Routines>(context).getTodaysTasks(currentDate);
-    final activeRoutines =Provider.of<Routines>(context).getActiveRoutines();
+    final activeRoutines = Provider.of<Routines>(context).getActiveRoutines();
     final todayTasks = Provider.of<Routines>(context).activeTasks;
 
     final remainingDuration = Provider.of<Routines>(context, listen: false)
@@ -36,26 +36,29 @@ class TodaysProgressItem extends StatelessWidget {
         width: double.infinity,
         decoration: const BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(20)),
-          boxShadow: [
-            BoxShadow(
-                color: Color.fromRGBO(0, 0, 0, 0.18),
-                blurRadius: 4,
-                spreadRadius: 0,
-                blurStyle: BlurStyle.outer)
-          ],
+          color: Color(0x44666038),
+          // boxShadow: [
+          //   BoxShadow(
+          //       color: Color(0xFF272722),
+          //       blurRadius: 4,
+          //       spreadRadius: 0,
+          //       blurStyle: BlurStyle.outer)
+          // ],
         ),
         child: InkWell(
-          onTap: todayTasks.isNotEmpty? () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => TodayProgressScreen(
-                    title: 'What\'s left for today?',
-                    currentDate: DateTime.now(),
-                  ),
-                ));
-            //Navigator.of(context).pushNamed(TodayProgressScreen.pageRoute);
-          }: null,
+          onTap: todayTasks.isNotEmpty
+              ? () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => TodayProgressScreen(
+                          title: 'What\'s left for today?',
+                          currentDate: DateTime.now(),
+                        ),
+                      ));
+                  //Navigator.of(context).pushNamed(TodayProgressScreen.pageRoute);
+                }
+              : null,
           borderRadius: BorderRadius.circular(20),
           child: Padding(
             padding: const EdgeInsets.only(top: 15.0, right: 15, bottom: 10),
@@ -92,13 +95,13 @@ class TodaysProgressItem extends StatelessWidget {
                                       Text(
                                         todayTasks[i].title,
                                         style: TextStyle(
-                                            decoration: completedTasks
-                                                    .contains(todayTasks[i])
-                                                ? TextDecoration.lineThrough
-                                                : null,
-                                            fontSize: 16.0,
-                                            color: const Color(
-                                                0xFF5C5470)), //Theme.of(context).textTheme.bodyMedium,
+                                          decoration: completedTasks
+                                                  .contains(todayTasks[i])
+                                              ? TextDecoration.lineThrough
+                                              : null,
+                                          fontSize: 16.0,
+                                          //color: const Color(0xFF5C5470),
+                                        ), //Theme.of(context).textTheme.bodyMedium,
                                       )
                                       //Text('Hello')
                                     ],
@@ -108,8 +111,9 @@ class TodaysProgressItem extends StatelessWidget {
                               itemCount: todayTasks
                                   .length, // TODO: Implement ITEM BUILDER
                             )
-                          :Text(
-                              activeRoutines.isEmpty ?'You do not have any active routine. To see something here, you should activate at least one routine.': 'Yaaay! No tasks for today! :)')),
+                          : Text(activeRoutines.isEmpty
+                              ? 'You do not have any active routine. To see something here, you should activate at least one routine.'
+                              : 'Yaaay! No tasks for today! :)')),
                 ),
                 todayTasks.isNotEmpty
                     ? Row(

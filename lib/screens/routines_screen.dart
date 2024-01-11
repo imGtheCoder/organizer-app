@@ -20,13 +20,16 @@ class RoutinesScreen extends StatelessWidget {
           left: (i % 2 == 0) ? 15 : 7.5),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
-        boxShadow: const [
-          BoxShadow(
-              color: Color.fromRGBO(0, 0, 0, 0.18),
-              blurRadius: 4,
-              spreadRadius: 0,
-              blurStyle: BlurStyle.outer)
-        ],
+        color: (Provider.of<Routines>(context).routines[i].active)
+            ? Color(0x44666038)
+            : Color(0xFF141721),
+        // boxShadow: const [
+        //   BoxShadow(
+        //       //color: Color.fromRGBO(0, 0, 0, 0.18),
+        //       blurRadius: 4,
+        //       spreadRadius: 0,
+        //       blurStyle: BlurStyle.outer)
+        // ],
       ),
       child: InkWell(
         borderRadius: BorderRadius.circular(20),
@@ -72,20 +75,8 @@ class RoutinesScreen extends StatelessWidget {
                   if (Provider.of<Routines>(context).routines[i].active)
                     const Icon(
                       Icons.circle,
-                      color: Color.fromRGBO(
-                        0,
-                        255,
-                        0,
-                        0.1,
-                      ),
+                      color: Color(0xFF74ae6b),
                       size: 15,
-                      shadows: [
-                        BoxShadow(
-                          blurRadius: 1,
-                          blurStyle: BlurStyle.outer,
-                          color: Color.fromRGBO(0, 0, 0, 0.2),
-                        )
-                      ],
                     ),
                   const SizedBox(
                     width: 5,
@@ -143,7 +134,8 @@ class RoutinesScreen extends StatelessWidget {
             ? GridView.builder(
                 itemCount: routines.length,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: defaultTargetPlatform == TargetPlatform.macOS ? 4 :2),
+                    crossAxisCount:
+                        defaultTargetPlatform == TargetPlatform.macOS ? 4 : 2),
                 itemBuilder: (context, i) {
                   final averageDuration = Provider.of<Routines>(context)
                       .averageDurationOverTheWeek(routines[i].days);
@@ -156,10 +148,12 @@ class RoutinesScreen extends StatelessWidget {
                       printDuration(averageDuration));
                 })
             : const Padding(
-              padding: EdgeInsets.all(30.0),
-              child: Center(
-                  child: Text(
-                      'You have not added any routines yet. If you want to see something here, you should try to add one!', textAlign: TextAlign.center,)),
-            ));
+                padding: EdgeInsets.all(30.0),
+                child: Center(
+                    child: Text(
+                  'You have not added any routines yet. If you want to see something here, you should try to add one!',
+                  textAlign: TextAlign.center,
+                )),
+              ));
   }
 }

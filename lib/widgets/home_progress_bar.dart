@@ -28,9 +28,18 @@ class HomeProgressBar extends StatelessWidget {
                   0
               ? 'All tasks completed!'
               : "${remainingItems.length}/${tasks.length}",
-          style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
+          style: TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.w600,
+              color: Color(0xFF141721)),
         ),
-        progressColor: Color.fromRGBO(255, 0, 0, 0.2),
+        progressColor: Color(0xFF74ae6b),
+        backgroundColor: Color(0xFFADB7D2),
+        // linearGradient: LinearGradient(colors: [
+        //   Color(0xFF74ae6b),
+        //   Color(0xFF666038),
+        // ]),
+
         barRadius: const Radius.circular(10),
       ),
     );
